@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         //getting the button
-        buttonPlay = findViewById(R.id.buttonPlay);
+        buttonPlay = (ImageButton) findViewById(R.id.buttonPlay);
         //initializing the highscore button
         buttonScore = findViewById(R.id.buttonScore);
 
