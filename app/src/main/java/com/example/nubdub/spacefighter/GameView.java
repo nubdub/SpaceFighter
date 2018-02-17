@@ -75,6 +75,12 @@ public class GameView extends SurfaceView implements Runnable {
         //updating the enemy coordinate with respect to player speed
         for(int i=0; i<enemyCount; i++){
             enemies[i].update(player.getSpeed());
+
+            //if collision occurrs with player
+            if (Rect.intersects(player.getDetectCollision(), enemies[i].getDetectCollision())) {
+                //moving enemy outside the left edge
+                enemies[i].setX(-200);
+            }
         }
     }
 

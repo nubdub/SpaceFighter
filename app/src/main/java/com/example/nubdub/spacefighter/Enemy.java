@@ -31,6 +31,8 @@ public class Enemy {
     private int maxY;
     private int minY;
 
+    //creating a rect object
+    private Rect detectCollision;
 
     public Enemy(Context context, int screenX, int screenY) {
         //getting bitmap from drawable resource
@@ -48,6 +50,8 @@ public class Enemy {
         x = screenX;
         y = generator.nextInt(maxY) - bitmap.getHeight();
 
+        //initializing rect object
+        detectCollision = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
     public void update(int playerSpeed) {
@@ -62,11 +66,24 @@ public class Enemy {
             x = maxX;
             y = generator.nextInt(maxY) - bitmap.getHeight();
         }
+
+        //Adding the top, left, bottom and right to the rect object
+        detectCollision.left = x;
+        detectCollision.top = y;
+        detectCollision.right = x + bitmap.getWidth();
+        detectCollision.bottom = y + bitmap.getHeight();
     }
 
-
+    //adding a setter to x coordinate so that we can change it after collision
+    public void setX(int x){
+        this.x = x;
+    }
 
     //getters
+    public Rect getDetectCollision() {
+        return detectCollision;
+    }
+
     public Bitmap getBitmap() {
         return bitmap;
     }

@@ -1,8 +1,7 @@
 package com.example.nubdub.spacefighter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.*;
 
 /**
  * Created by nlpsa on 2/17/2018.
@@ -28,6 +27,8 @@ public class Player {
     private final int MIN_SPEED = 1;
     private final int MAX_SPEED = 20;
 
+    private Rect detectCollision;
+
     public Player(Context context, int screenX, int screenY) {
         x = 75;
         y = 50;
@@ -42,6 +43,9 @@ public class Player {
 
         //setting the boosting value to false initially
         boosting = false;
+
+        //initializing rect object
+        detectCollision =  new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
 
@@ -84,6 +88,16 @@ public class Player {
         if (y > maxY) {
             y = maxY;
         }
+
+        //adding top, left, bottom and right to the rect object
+        detectCollision.left = x;
+        detectCollision.top = y;
+        detectCollision.right = x + bitmap.getWidth();
+        detectCollision.bottom = y + bitmap.getHeight();
+    }
+
+    public Rect getDetectCollision() {
+        return detectCollision;
     }
 
     public Bitmap getBitmap() {
