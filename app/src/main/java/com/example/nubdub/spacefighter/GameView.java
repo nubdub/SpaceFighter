@@ -62,7 +62,7 @@ public class GameView extends SurfaceView implements Runnable {
     //the high Scores Holder
     int highScore[] = new int[4];
 
-    //Shared Prefernces to store the High Scores
+    //Shared Preferences to store the High Scores
     SharedPreferences sharedPreferences;
 
     //the mediaplayer objects to configure the background music
@@ -171,7 +171,7 @@ public class GameView extends SurfaceView implements Runnable {
         else {
             //if the enemy has just entered
             if (flag) {
-                if (enemies.getX() == -199) {
+                if (player.getX() >= enemies.getX()) {
                     //increment countMisses
                     countMisses++;
 
