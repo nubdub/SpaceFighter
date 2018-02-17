@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Image button
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //getting the button
         buttonPlay = findViewById(R.id.buttonPlay);
         //initializing the highscore button
-        buttonScore = (ImageButton) findViewById(R.id.buttonScore);
+        buttonScore = findViewById(R.id.buttonScore);
 
         //adding a click listener
         buttonPlay.setOnClickListener(this);
