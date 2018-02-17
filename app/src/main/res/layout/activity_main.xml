@@ -24,6 +24,39 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="93dp"
         android:background="@drawable/highscore" />
+
+    <RadioButton
+        android:id="@+id/radEasy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonPlay"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/buttonPlay"
+        android:layout_marginBottom="42dp"
+        android:onClick="onRadioButtonClicked"
+        android:text="Easy" />
+
+    <RadioButton
+        android:id="@+id/radMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/radEasy"
+        android:layout_alignBottom="@+id/radEasy"
+        android:layout_centerHorizontal="true"
+        android:onClick="onRadioButtonClicked"
+        android:text="Medium" />
+
+    <RadioButton
+        android:id="@+id/radHard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/radMedium"
+        android:layout_alignBottom="@+id/radMedium"
+        android:layout_alignEnd="@+id/buttonPlay"
+        android:layout_alignRight="@+id/buttonPlay"
+        android:onClick="onRadioButtonClicked"
+        android:text="Hard" />
 
 </RelativeLayout>
