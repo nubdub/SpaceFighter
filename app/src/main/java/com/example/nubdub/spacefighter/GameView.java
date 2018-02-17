@@ -3,6 +3,7 @@ package com.example.nubdub.spacefighter;
 import android.content.*;
 import android.graphics.*;
 import android.view.*;
+import java.util.*;
 /**
  * Created by nlpsa on 2/17/2018.
  */
@@ -20,15 +21,25 @@ public class GameView extends SurfaceView implements Runnable {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
 
-    public GameView(Context context) {
+    private ArrayList<Star> stars = new
+            ArrayList<Star>();
+
+    public GameView(Context context, int screenX, int screenY) {
         super(context);
 
         //initializing player object
-        player = new Player(context);
+        player = new Player(context, screenX, screenY);
 
         //initializing drawing objects
         surfaceHolder = getHolder();
         paint = new Paint();
+
+        //adding 100 stars you may increase the number
+        int starNums = 100;
+        for (int i = 0; i < starNums; i++) {
+            Star s  = new Star(screenX, screenY);
+            stars.add(s);
+        }
     }
 
     @Override
@@ -43,6 +54,11 @@ public class GameView extends SurfaceView implements Runnable {
     private void update() {
         //updating player position
         player.update();
+
+        //Updating the stars with player speed
+        for (Star s : stars) {
+            s.update(player.getSpeed());
+        }
     }
 
     private void draw() {
@@ -52,6 +68,16 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             //drawing a background color for canvas
             canvas.drawColor(Color.BLACK);
+
+            //setting the paint color to white to draw the stars
+            paint.setColor(Color.WHITE);
+
+            //drawing all stars
+            for (Star s : stars) {
+                paint.setStrokeWidth(s.getStarWidth());
+                canvas.drawPoint(s.getX(), s.getY(), paint);
+            }
+
             //Drawing the player
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -83,5 +109,21 @@ public class GameView extends SurfaceView implements Runnable {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_UP:
+                //stopping the boosting when screen is released
+                player.stopBoosting();
+                break;
+
+            case MotionEvent.ACTION_DOWN:
+                //boosting the space jet when screen is pressed
+                player.setBoosting();
+                break;
+        }
+        return true;
     }
 }
