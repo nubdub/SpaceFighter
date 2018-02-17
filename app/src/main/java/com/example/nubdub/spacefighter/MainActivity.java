@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //adding a click listener
         buttonPlay.setOnClickListener(this);
         //setting the on click listener to play now button
-        buttonPlay.setOnClickListener(this);
+        buttonScore.setOnClickListener(this);
     }
 
     @Override
