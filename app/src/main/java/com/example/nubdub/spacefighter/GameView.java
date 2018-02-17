@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 /**
@@ -18,60 +19,46 @@ import java.util.ArrayList;
  */
 
 public class GameView extends SurfaceView implements Runnable {
-    volatile boolean playing;
-    private Thread gameThread = null;
-
-    //adding the player to this class
-    private Player player;
-
-    //These objects will be used for drawing
-    private Paint paint;
-    private Canvas canvas;
-    private SurfaceHolder surfaceHolder;
-
-    //Adding enemies object array
-    private Enemy enemies;
-
-    //created a reference of the class Friend
-    private Friend friend;
-
-    //Adding 3 enemies you may increase the size
-    private int enemyCount = 3;
-
-    private ArrayList<Star> stars = new
-            ArrayList<Star>();
-
-    //defining a boom object to display blast
-    private Boom boom;
-
-    //a screenX holder
-    int screenX;
-
-    //to count the number of Misses
-    int countMisses;
-
-    //indicator that the enemy has just entered the game screen
-    boolean flag ;
-
-    //an indicator if the game is Over
-    private boolean isGameOver ;
-
-    //the score holder
-    int score;
-
-    //the high Scores Holder
-    int highScore[] = new int[4];
-
-    //Shared Preferences to store the High Scores
-    SharedPreferences sharedPreferences;
 
     //the mediaplayer objects to configure the background music
     static MediaPlayer gameOnsound;
     final MediaPlayer killedEnemysound;
     final MediaPlayer gameOversound;
-
+    volatile boolean playing;
+    //a screenX holder
+    int screenX;
+    //to count the number of Misses
+    int countMisses;
+    //indicator that the enemy has just entered the game screen
+    boolean flag;
+    //the score holder
+    int score;
+    //the high Scores Holder
+    int highScore[] = new int[4];
+    //Shared Prefernces to store the High Scores
+    SharedPreferences sharedPreferences;
     //context to be used in onTouchEvent to cause the activity transition from GameAvtivity to MainActivity.
     Context context;
+    private TextView lives;
+    private Thread gameThread = null;
+    //adding the player to this class
+    private Player player;
+    //These objects will be used for drawing
+    private Paint paint;
+    private Canvas canvas;
+    private SurfaceHolder surfaceHolder;
+    //Adding enemies object array
+    private Enemy enemies;
+    //created a reference of the class Friend
+    private Friend friend;
+    //Adding 3 enemies you may increase the size
+    private int enemyCount = 3;
+    private ArrayList<Star> stars = new
+            ArrayList<Star>();
+    //defining a boom object to display blast
+    private Boom boom;
+    //an indicator if the game is Over
+    private boolean isGameOver ;
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
@@ -127,6 +114,11 @@ public class GameView extends SurfaceView implements Runnable {
         this.context = context;
     }
 
+    //stop the music on exit
+    public static void stopMusic() {
+        gameOnsound.stop();
+    }
+
     @Override
     public void run() {
         while (playing) {
@@ -171,7 +163,7 @@ public class GameView extends SurfaceView implements Runnable {
         else {
             //if the enemy has just entered
             if (flag) {
-                if (player.getX() >= enemies.getX()) {
+                if (player.getDetectCollision().exactCenterX() >= enemies.getDetectCollision().exactCenterX()) {
                     //increment countMisses
                     countMisses++;
 
@@ -269,6 +261,9 @@ public class GameView extends SurfaceView implements Runnable {
             paint.setTextSize(30);
             canvas.drawText("Score:"+score,100,50,paint);
 
+            //Drawing the number of misses to the game screen
+            canvas.drawText("Number of misses: " + countMisses, 100, 100, paint);
+
             //Drawing the player
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -316,7 +311,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void control() {
         try {
-            gameThread.sleep(17);
+            Thread.sleep(17);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -357,10 +352,5 @@ public class GameView extends SurfaceView implements Runnable {
             }
         }
         return true;
-    }
-
-    //stop the music on exit
-    public static void stopMusic() {
-        gameOnsound.stop();
     }
 }
