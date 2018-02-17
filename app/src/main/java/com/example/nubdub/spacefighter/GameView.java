@@ -21,6 +21,12 @@ public class GameView extends SurfaceView implements Runnable {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
 
+    //Adding enemies object array
+    private Enemy[] enemies;
+
+    //Adding 3 enemies you may increase the size
+    private int enemyCount = 3;
+
     private ArrayList<Star> stars = new
             ArrayList<Star>();
 
@@ -40,6 +46,12 @@ public class GameView extends SurfaceView implements Runnable {
             Star s  = new Star(screenX, screenY);
             stars.add(s);
         }
+
+        //initializing enemy object array
+        enemies = new Enemy[enemyCount];
+        for(int i=0; i<enemyCount; i++){
+            enemies[i] = new Enemy(context, screenX, screenY);
+        }
     }
 
     @Override
@@ -58,6 +70,11 @@ public class GameView extends SurfaceView implements Runnable {
         //Updating the stars with player speed
         for (Star s : stars) {
             s.update(player.getSpeed());
+        }
+
+        //updating the enemy coordinate with respect to player speed
+        for(int i=0; i<enemyCount; i++){
+            enemies[i].update(player.getSpeed());
         }
     }
 
@@ -84,6 +101,16 @@ public class GameView extends SurfaceView implements Runnable {
                     player.getX(),
                     player.getY(),
                     paint);
+
+            //drawing the enemies
+            for (int i = 0; i < enemyCount; i++) {
+                canvas.drawBitmap(
+                        enemies[i].getBitmap(),
+                        enemies[i].getX(),
+                        enemies[i].getY(),
+                        paint
+                );
+            }
             //Unlocking the canvas
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
