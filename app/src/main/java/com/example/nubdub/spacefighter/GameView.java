@@ -60,8 +60,6 @@ public class GameView extends SurfaceView implements Runnable {
     //an indicator if the game is Over
     private boolean isGameOver ;
 
-    //Checks to see if enemy is hit
-    boolean hit = false;
 
     public GameView(Context context, int screenX, int screenY) {
         super(context);
