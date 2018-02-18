@@ -159,13 +159,12 @@ public class GameView extends SurfaceView implements Runnable {
 
             //will play a sound at the collision between player and the enemy
             killedEnemysound.start();
-            enemies.setX(-200);
+            enemies.setX(1920);
         }
         else {
             //if the enemy has just entered
             if (flag) {
-                if (player.getDetectCollision().right >= enemies.getDetectCollision().left &&
-                        enemies.getX() < -100) {
+                if (player.getDetectCollision().exactCenterX() >= enemies.getDetectCollision().exactCenterX() && enemies.getX() < player.getX()) {
                     //increment countMisses
                     countMisses++;
 
