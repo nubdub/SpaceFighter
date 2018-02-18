@@ -60,6 +60,9 @@ public class GameView extends SurfaceView implements Runnable {
     //an indicator if the game is Over
     private boolean isGameOver ;
 
+    //Checks to see if enemy is hit
+    boolean hit = false;
+
     public GameView(Context context, int screenX, int screenY) {
         super(context);
 
@@ -163,7 +166,8 @@ public class GameView extends SurfaceView implements Runnable {
         else {
             //if the enemy has just entered
             if (flag) {
-                if (player.getDetectCollision().exactCenterX() >= enemies.getDetectCollision().exactCenterX()) {
+                if (player.getDetectCollision().right >= enemies.getDetectCollision().left &&
+                        enemies.getX() < -100) {
                     //increment countMisses
                     countMisses++;
 
@@ -185,7 +189,7 @@ public class GameView extends SurfaceView implements Runnable {
                     for (int i = 0; i < 4; i++) {
                         if (highScore[i] < score) {
 
-                            final int finalI = i;
+                            final int finall = i;
                             highScore[i] = score;
                             break;
                         }
